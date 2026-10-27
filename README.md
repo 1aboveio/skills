@@ -8,20 +8,21 @@ metadata and documentation, not skill source files.
 | Harness | Public installation method | Status |
 |---|---|---|
 | Pi | Pi's npm package installer | Available now |
-| Codex CLI | Native plugin from this catalog | Pending certification and activation |
+| Codex CLI | Native plugin from this catalog | Certified for CLI 0.164.0; available when the 1.0.10 catalog entry reaches `main` |
 
 Neither path requires access to the implementation repository. Do not use this
 catalog as a Skills CLI source: it contains no skills to install.
 
 ## Launch Status
 
-The Codex plugin is not available yet. The published bundle checked during setup,
-`@1aboveio/skills@1.0.8`, does not contain the native Codex metadata. No installable
-marketplace entry is published here until a compatible release passes certification.
+`@1aboveio/skills@1.0.10` is certified for Codex CLI **0.164.0** with plugin
+identity `1aboveio-skills@1aboveio`. Other CLI versions and desktop support are
+not certified.
 
-The first target is Codex CLI 0.164.0 and the plugin identity
-`1aboveio-skills@1aboveio`. Other client versions and desktop support are not
-certified.
+Once the matching catalog entry is added to `main`, this catalog selects exactly
+`@1aboveio/skills@1.0.10` from `https://registry.npmjs.org/`. The installation
+commands below use the public Git catalog for discovery and npm for the payload.
+Package publication and certification alone do not make the catalog installable.
 
 ## Install in Pi
 
@@ -76,9 +77,9 @@ pi update npm:@1aboveio/skills
 Current Pi also supports `pi update --extensions` to update all installed packages;
 plain `pi update` updates Pi itself. Check `pi update --help` on older versions.
 Package selection remains in settings; rerun the selector only to change it.
-An exact version, such as `pi install npm:@1aboveio/skills@1.0.8`, stays pinned;
-install a different explicit version to change that pin. This Pi pin does not
-make 1.0.8 compatible with native Codex plugins.
+An exact version, such as `pi install npm:@1aboveio/skills@1.0.10`, stays pinned;
+install a different explicit version to change that pin. Pi version pinning is
+separate from native Codex certification.
 
 Start a new Pi session after installation, updates, or selection changes, or use
 `/reload` in an existing session. At the first startup, the bundle may ask for
@@ -101,15 +102,13 @@ negative path entries; they do not delete the copies used by Claude Code or Code
 Project-scoped selection does not hide personal copies. Removing the package is
 not a cleanup of those shared files or of previously written Pi path exclusions.
 
-## Codex CLI: After Activation Only
+## Install in Codex CLI
 
-**These commands are for after the first certified catalog pin is published. They
-do not work as an installation path today.** The catalog must pin an exact
-native-compatible version from `https://registry.npmjs.org/`, not `latest` or
-1.0.8. The target is Codex CLI **0.164.0**, not a minimum supported version.
-Install that client separately, with Git, Node.js, npm, and tar available.
-
-After this README's launch status confirms activation:
+Use the public catalog on `main` after its matching **1.0.10** entry is present.
+The entry must pin exactly `@1aboveio/skills@1.0.10` from
+`https://registry.npmjs.org/`, not `latest` or a version range. The certified client
+is Codex CLI **0.164.0**, not a minimum supported version. Install that client
+separately, with Git, Node.js, npm, and tar available.
 
 ```sh
 codex plugin marketplace add https://github.com/1aboveio/skills.git --ref main --json
@@ -117,15 +116,19 @@ codex plugin add 1aboveio-skills@1aboveio --json
 codex plugin list --marketplace 1aboveio --json
 ```
 
-Check the returned installed version against the catalog's certified pin, then
-start a **new Codex session** before using the skills. The public repository is
-the marketplace source; the plugin payload comes from npm. Codex loads the
-plugin's skills, not Pi's extension or package selector.
+Check that the returned installed version is **1.0.10**, then start a **new Codex
+session** before using the skills. The public repository is the marketplace
+source; the plugin payload comes from npm. Codex loads the plugin's skills, not
+Pi's extension or package selector.
+
+Compaction and recovery require explicit skill instructions. After compaction or
+a thread restart, reload the relevant skill and resume from its saved work state.
+Certification does not guarantee automatic global hooks or automatic recovery.
 
 ### Update and Remove in Codex
 
-After a new certified pin is delivered, refresh the catalog, explicitly re-add
-the plugin, and check the installed version:
+To update an older installation to the catalog's certified **1.0.10** pin,
+refresh the catalog, explicitly re-add the plugin, and check the installed version:
 
 ```sh
 codex plugin marketplace upgrade 1aboveio --json
@@ -133,9 +136,10 @@ codex plugin add 1aboveio-skills@1aboveio --json
 codex plugin list --marketplace 1aboveio --json
 ```
 
-Start a new session afterward. Refreshing the marketplace alone is not proof that
-the installed plugin changed. If an update fails, do not treat it as installed;
-check the reported installed version before continuing.
+Start a new session afterward and confirm the installed version is **1.0.10**.
+Refreshing the marketplace alone is not proof that the installed plugin changed.
+If an update fails, do not treat it as installed; check the reported installed
+version before continuing.
 
 To uninstall the plugin, then optionally stop tracking the marketplace:
 
@@ -189,7 +193,7 @@ verified pin. Catalog withdrawal does not disable or uninstall cached plugins.
 ## Sources
 
 - [Public npm package](https://www.npmjs.com/package/@1aboveio/skills) and
-  [1.0.8 registry manifest](https://registry.npmjs.org/@1aboveio%2fskills/1.0.8).
+  [1.0.10 registry manifest](https://registry.npmjs.org/@1aboveio%2fskills/1.0.10).
 - [Pi package installation and resource selection](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
 - [Pi package command reference](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/cli.md#package-commands).
 - [Codex plugin use and new-session requirement](https://developers.openai.com/codex/plugins).
