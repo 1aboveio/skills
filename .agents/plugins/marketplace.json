@@ -1,0 +1,19 @@
+{
+  "name": "1aboveio",
+  "plugins": [
+    {
+      "name": "1aboveio-skills",
+      "source": {
+        "source": "npm",
+        "package": "@1aboveio/skills",
+        "version": "1.0.10",
+        "registry": "https://registry.npmjs.org/"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
